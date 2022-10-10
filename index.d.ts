@@ -4,7 +4,7 @@
 declare class AbortController {
   constructor();
   readonly signal: AbortSignal;
-  abort(reason?: any): void;
+  abort(reason?: string): void;
 }
 
 declare class AbortSignal extends EventTarget {
