@@ -1,3 +1,4 @@
+name: Add diff to release
 on:
   release:
     types: [published]
