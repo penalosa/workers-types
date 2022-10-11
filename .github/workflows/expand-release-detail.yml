@@ -28,7 +28,7 @@ jobs:
       run: npm install
       
     - name: Generate diff
-      run: npm run generate:diff
+      run: npm run --silent generate:diff
       
     - name: Edit Release
       uses: irongut/EditRelease@v1.2.0
