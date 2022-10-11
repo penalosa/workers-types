@@ -1,6 +1,5 @@
 name: Add diff to release
 on:
-  workflow_dispatch:
   release:
     types: [published]
 
@@ -28,7 +27,7 @@ jobs:
       run: npm install
       
     - name: Generate diff
-      run: npm run --silent generate:diff
+      run: npm run --silent generate:diff > diff.md
       
     - name: Edit Release
       uses: irongut/EditRelease@v1.2.0
