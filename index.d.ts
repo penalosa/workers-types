@@ -7,15 +7,6 @@ declare class AbortController {
   abort(reason?: any): void;
 }
 
-declare class AbortSignal extends EventTarget {
-  constructor();
-  static abort(reason?: any): AbortSignal;
-  static timeout(delay: number): AbortSignal;
-  readonly aborted: boolean;
-  readonly reason: any;
-  throwIfAborted(): void;
-}
-
 interface BasicImageTransformations {
   /**
    * Maximum width in image pixels. The value must be an integer.
@@ -146,12 +137,13 @@ declare abstract class Cache {
   put(request: Request | string, response: Response): Promise<void>;
 }
 
-interface CacheQueryOptions {
-  ignoreMethod?: boolean;
-}
-
 declare abstract class CacheStorage {
   open(cacheName: string): Promise<Cache>;
+  readonly default: Cache;
+}
+
+declare abstract class CacheR2Storage {
+  open(cacheName: string, bucketName: string): Promise<Cache>;
   readonly default: Cache;
 }
 
@@ -173,7 +165,6 @@ declare class CloseEvent extends Event {
 }
 
 interface CloseEventInit {
-  code?: number;
   reason?: string;
   wasClean?: boolean;
 }
@@ -209,6 +200,7 @@ declare type Content = string | ReadableStream | Response;
 
 interface ContentOptions {
   html?: boolean;
+  json?: boolean
 }
 
 declare class CountQueuingStrategy {
