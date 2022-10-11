@@ -1,10 +1,10 @@
 // This file is auto-generated. DO NOT MODIFY.
 // Please refer to the Auto-Generation section of the README.md.
 
-export declare class AbortController {
+declare class AbortController {
   constructor();
   readonly signal: AbortSignal;
-  abort(reason?: string): void;
+  abort(reason?: any): void;
 }
 
 declare class AbortSignal extends EventTarget {
@@ -16,7 +16,7 @@ declare class AbortSignal extends EventTarget {
   throwIfAborted(): void;
 }
 
-export interface BasicImageTransformations {
+interface BasicImageTransformations {
   /**
    * Maximum width in image pixels. The value must be an integer.
    */
@@ -76,6 +76,11 @@ export interface BasicImageTransformations {
    * hsl(…), etc.)
    */
   background?: string;
+  /**
+   * Number of degrees (90, 180, 270) to rotate the image by. width and height
+   * options refer to axes after rotation.
+   */
+  rotate?: 0 | 90 | 180 | 270 | 360;
 }
 
 interface BasicImageTransformationsGravityCoordinates {
@@ -85,6 +90,7 @@ interface BasicImageTransformationsGravityCoordinates {
 
 declare class Blob {
   constructor(bits?: BlobBits, options?: BlobOptions);
+  readonly size: number;
   readonly type: string;
   slice(start?: number, end?: number, type?: string): Blob;
   arrayBuffer(): Promise<ArrayBuffer>;
@@ -96,7 +102,6 @@ declare type BlobBits = (ArrayBuffer | string | Blob)[];
 
 interface BlobOptions {
   type?: string;
-  valency?: string;
 }
 
 declare abstract class Body {
