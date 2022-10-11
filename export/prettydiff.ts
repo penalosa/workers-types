@@ -48,7 +48,7 @@ const secondLastTag = execSync(
 
 // Get a git diff between the two most recent tags with full context
 const diff = execSync(
-  `git diff --minimal --unified="$(wc -l < index.d.ts)" ${secondLastTag.trim()}:index.d.ts ${lastTag.trim()}:index.d.ts | tail -n +5`
+  `git diff --minimal --unified="$(wc -l < index.d.ts)" ${secondLastTag.trim()}:index.d.ts index.d.ts | tail -n +5`
 ).toString();
 
 // Split the diff by empty line (i.e. between type definitions)
@@ -59,7 +59,7 @@ const blocks = diff.split(/(\n \n|\n\+\n|\n-\n)/);
 const diffedBlocks = blocks.filter((b) => /^(\+|-)/m.test(b));
 
 // Get all type definitions that are purely additive
-const added = diffedBlocks.filter((b) => /^(\+)/.test(b));
+const added = diffedBlocks.filter((b) => /^(\+.*\n?)+$/.test(b));
 if (added.length > 0) {
   console.log(`## Added definitions`);
   added.forEach((b) => {
@@ -69,7 +69,7 @@ if (added.length > 0) {
 }
 
 // Get all type definitions that are purely deletions
-const removed = diffedBlocks.filter((b) => /^-/.test(b));
+const removed = diffedBlocks.filter((b) => /^(-.*\n?)+$/.test(b));
 if (removed.length > 0) {
   console.log(`## Removed definitions`);
   removed.forEach((b) => {
@@ -77,7 +77,7 @@ if (removed.length > 0) {
   });
 }
 
-// Get all changes that are purely updates to existing definitions
+// Get all changes that are updates to existing definitions
 const updated = diffedBlocks.filter((b) => /^ /m.test(b));
 if (updated.length > 0) {
   console.log(`## Updated definitions`);
