@@ -29,6 +29,7 @@ jobs:
         run: npm install
 
       - name: Generate diff
+        id: generate_diff
         run: echo "::set-output name=diff::$(npm run --silent generate:diff)"
         
       - uses: octokit/request-action@v2.x
@@ -37,4 +38,4 @@ jobs:
           route: GET /repos/${{ github.repository }}/releases/latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo diff
+      - run: echo ${{ steps.generate_diff.outputs.diff }}
