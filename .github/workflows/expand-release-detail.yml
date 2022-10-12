@@ -43,4 +43,13 @@ jobs:
           route: GET /repos/${{ github.repository }}/releases/latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo ${{ steps.diff.outputs.content }}
+      - uses: octokit/request-action@v2.x
+        id: update_release
+        with:
+          route: PATCH /repos/${{ github.repository }}/releases/{release_id}
+          release_id: ${{ fromJson(steps.get_latest_release.outputs.data).id }}
+          body: |
+            ${{ fromJson(steps.get_latest_release.outputs.data).body }}
+            ${{ steps.diff.outputs.content }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
