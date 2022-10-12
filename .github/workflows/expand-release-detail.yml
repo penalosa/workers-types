@@ -48,9 +48,11 @@ jobs:
         with:
           route: PATCH /repos/${{ github.repository }}/releases/{release_id}
           release_id: ${{ fromJson(steps.get_latest_release.outputs.data).id }}
-          input: |
-            body: |
+            body:|
+              |
+              ${{ env.REQUEST_BODY }}
+        env:
+          REQUEST_BODY: |
               ${{ fromJson(steps.get_latest_release.outputs.data).body }}
               ${{ steps.diff.outputs.content }}
-        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
