@@ -1,5 +1,6 @@
 name: Add diff to release
 on:
+  push: 
   workflow_dispatch:
   release:
     types: [published]
@@ -35,4 +36,4 @@ jobs:
           route: GET /repos/${{ github.repository }}/releases/latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo ${{ fromJson(steps.get_latest_release.outputs.data) }}
+      - run: echo ${{ fromJson(steps.get_latest_release.outputs.data).body }}
